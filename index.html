@@ -278,18 +278,28 @@ Call to action,"The economic and educational benefits are still worthwhile, so t
                 // Update step indicator
                 stepIndicator.textContent = `Step ${currentStep + 1} of ${prompts.length}`;
 
-                // Manage button visibility
+                // Manage button visibility and text
                 prevButton.disabled = currentStep === 0;
+                if (currentStep === prompts.length - 1) {
+                    nextButton.textContent = 'Generate Full Essay';
+                } else {
+                    nextButton.textContent = 'Next';
+                }
             };
 
             /**
-             * Navigates to the next step.
+             * Navigates to the next step or generates the essay.
              */
             const handleNext = () => {
                 const currentPrompt = prompts[currentStep].prompt;
                 studentResponses[currentPrompt] = userInput.value;
-                currentStep++;
-                renderStep();
+                
+                if (currentStep === prompts.length - 1) {
+                    generateEssay();
+                } else {
+                    currentStep++;
+                    renderStep();
+                }
             };
 
             /**
